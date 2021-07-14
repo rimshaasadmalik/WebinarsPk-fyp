@@ -1,0 +1,10 @@
+<p-menubar [model]="items" [style]="{'color': 'rgb(190, 153, 49);'}">
+    <ng-template pTemplate="start">
+        <img src="assets/images/logo.png" height="40" [routerLink]="['/home']" class="p-mr-2">
+    </ng-template>
+    <ng-template pTemplate="end">
+        <!-- <input type="text" class="p-button-rounded" pInputText placeholder="Search"> -->
+        <button type="button" class="ml-1 btnColor p-button-raised p-button-text" icon="pi pi-user"
+            pButton pRipple [routerLink]="['/login']" label="Login"></button>
+    </ng-template>
+</p-menubar>

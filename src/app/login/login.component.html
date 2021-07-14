@@ -1,0 +1,30 @@
+<div [@routerTransition] class="login-page">
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <img class="user-avatar" src="assets/images/logo.png" width="150px" style="background-color: white;" />
+            <h1>Webinars Online</h1>
+            <form role="form">
+                <div class="form-content">
+                    <div class="form-group">
+                        <label for="email" class="input-label">Email</label>
+                        <input class="form-control input-underline input-lg" type="text" [(ngModel)]="email"
+                            name="email" id="email" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="input-label">Password</label>
+                        <input class="form-control input-underline input-lg" type="password" [(ngModel)]="password"
+                            name="password" id="password" />
+                        <span class="registerBtn"><a [routerLink]="['/signup']"><i>Register Yourself</i></a></span>
+                        <span class="forgetBtn"><a [routerLink]="['/forget-password']"><i>Forget Password</i></a></span>
+                    </div>
+                </div>
+                <a [routerLink]="['/home']" class="btn rounded-btn">{{ 'Home' }}</a>
+                &nbsp;
+                <a (click)="onLoggedin()" class="btn rounded-btn">{{ 'Log in' }}</a>
+                <!-- &nbsp; <a [routerLink]="['/signup']" class="btn rounded-btn">{{ 'Register' }}</a> -->
+                <!-- &nbsp; <a [routerLink]="['/login']" class="btn rounded-btn">{{ 'Supplier Login'  }}</a> -->
+            </form>
+        </div>
+    </div>
+</div>

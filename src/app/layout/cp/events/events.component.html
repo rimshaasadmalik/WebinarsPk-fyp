@@ -1,0 +1,48 @@
+<div class="card p-0">
+    <p-table #dt [value]="rows" [rows]="10" [paginator]="true" [globalFilterFields]="['name','email','profession']"
+        [rowHover]="true" dataKey="id" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Events</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="hostName">Host Name <p-sortIcon field="hostName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="eventDate">Event Date <p-sortIcon field="eventDate"></p-sortIcon>
+                </th>
+                <th pSortableColumn="eventTime">Event Time <p-sortIcon field="eventTime"></p-sortIcon>
+                </th>
+                <th pSortableColumn="duration">Duration <p-sortIcon field="duration"></p-sortIcon>
+                </th>
+                <th pSortableColumn="amount">Amount <p-sortIcon field="amount"></p-sortIcon>
+                </th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td>{{item.hostName}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.eventDate | date}}</td>
+                <td>{{item.eventTime}}</td>
+                <td>{{item.duration | number}}</td>
+                <td>{{item.amount | number}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{rows ? rows.length : 0 }} artists.
+            </div>
+        </ng-template>
+    </p-table>
+</div>

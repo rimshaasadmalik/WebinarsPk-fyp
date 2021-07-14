@@ -1,0 +1,85 @@
+<app-home-nav></app-home-nav>
+
+<div class="card">
+    <p-dataView #dv [value]="rows" [paginator]="true" [rows]="9" filterBy="name" [sortField]="sortField"
+        [sortOrder]="sortOrder" layout="grid">
+        <ng-template pTemplate="header">
+            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+                <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+                    <i class="pi pi-search"></i>
+                    <input type="search" pInputText placeholder="Search by Name"
+                        (input)="dv.filter($event.target.value)">
+                </span>
+                <!-- <p-dataViewLayoutOptions></p-dataViewLayoutOptions> -->
+            </div>
+        </ng-template>
+        <ng-template let-item pTemplate="gridItem">
+            <div class="p-col-12 p-md-4">
+                <div class="product-grid-item card">
+                    <div class="product-grid-item-top">
+                        <div>
+                            <i class="pi pi-tag product-category-icon"></i>
+                            <span class="product-category">{{item?.profession}}</span>
+                        </div>
+                    </div>
+                    <div class="product-grid-item-content">
+                        <img [src]="'assets/images/profiles/' + item?.image" [alt]="item?.image"
+                            onerror="this.onerror=null;this.src='assets/images/profiles/dummy.jpg'" />
+                        <div class="product-name">{{item?.name}}</div>
+                        <div class="product-description" pTooltip="{{item?.bio}}" tooltipPosition="bottom">{{item?.bio}}
+                        </div>
+                        <!-- <div class="product-description">{{item?.dob | date}}</div> -->
+                        <!-- <div class="product-host">Host: {{event?.event?.hostName}}</div> -->
+                    </div>
+                    <div class="product-grid-item-bottom">
+                        <!-- <div class="contactInfo"><a href="tel:{{item?.phoneno}}">{{item?.phoneno}}</a></div> -->
+                        <div class="contactInfo m-auto"><a href="mailto:{{item?.email}}" target="_blank">{{item?.email}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
+</div>
+
+<!-- <div class="card p-0">
+    <p-table #dt [value]="rows" [rows]="10" [paginator]="true" [globalFilterFields]="['name','email','profession']"
+        [rowHover]="true" dataKey="id" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Artists</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="price">Email <p-sortIcon field="price"></p-sortIcon>
+                </th>
+                <th pSortableColumn="category">Profession <p-sortIcon field="category"></p-sortIcon>
+                </th>
+                <th pSortableColumn="rating">BirthDate <p-sortIcon field="rating"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td>{{item.name}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.profession}}</td>
+                <td>{{item.dob}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{rows ? rows.length : 0 }} artists.
+            </div>
+        </ng-template>
+    </p-table>
+</div> -->

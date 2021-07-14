@@ -1,0 +1,11 @@
+// shared css for the login and signup page
+@import '../login/login.component.scss';
+
+.loginBtn{
+    float: right;
+    color: rgb(190, 153, 49);
+}
+
+.form-group{
+margin-bottom: 0%;
+}

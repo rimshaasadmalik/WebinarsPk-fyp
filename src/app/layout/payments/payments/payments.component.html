@@ -1,0 +1,27 @@
+<p-card [style]="{width: 'auto'}" styleClass="p-card-shadow">
+    <ng-template pTemplate="header">
+        <div class="p-text-center">
+            <h2>Payments</h2>
+        </div>
+    </ng-template>
+    <div class="p-grid">
+        <div class="p-col-6 p-md-6 p-sm-12 p-text-center">
+            <div class="box p-shadow-12 p-p-5">
+                <button pButton pRipple type="button" label="Payables" class="p-button-raised p-button-info"
+                    (click)="onPayables()"></button>
+                <hr>
+                <!-- <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart> -->
+            </div>
+        </div>
+        <div class="p-col-6 p-md-6 p-sm-12 p-text-center">
+            <div class="box p-shadow-12 p-p-5">
+                <button pButton pRipple type="button" label="Receivables" class="p-button-raised p-button-info"
+                    (click)="onReceivables()"></button>
+                <hr>
+                <!-- <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart> -->
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer"></ng-template>
+</p-card>

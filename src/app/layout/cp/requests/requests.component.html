@@ -1,0 +1,80 @@
+<div class="card p-shadow-12">
+    <p-table #dt [value]="requests" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['userId.username', 'payment.status', 'payment.amount']" [rowHover]="true" dataKey="_id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between headerBtns">
+                <h5 class="p-m-0">Contact Us Requests</h5>
+                <button pButton pRipple label="Responded"  class="p-button-info p-mr-2"
+                    (click)="onResponded()" *ngIf="!responded"></button>
+                <button pButton pRipple label="Un Responded"  class="p-button-info p-mr-2"
+                    (click)="onUnResponded()" *ngIf="responded"></button>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon>
+                </th>
+                <th pSortableColumn="subject">Subject <p-sortIcon field="subject"></p-sortIcon>
+                </th>
+                <th pSortableColumn="message">Message <p-sortIcon field="message"></p-sortIcon>
+                </th>
+                <th class="p-text-center">Action </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td>{{item?.email}}</td>
+                <td class="p-text-nowrap p-text-truncate">{{item?.subject}}</td>
+                <td class="p-text-nowrap p-text-truncate">{{item?.message}}</td>
+                <td class="p-py-1 p-text-center">
+                    <!-- <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-primary p-mr-2"
+                        (click)="viewItem(item)"></button> -->
+                    <button pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-success p-mr-2"
+                        (click)="editItem(item)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                        (click)="deleteItem(item)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <tr>
+                <td colspan="4">In total there are {{requests ? requests.length : 0 }} Un-Responded Requests.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="itemDialog" [style]="{width: '1000px'}" header="Faq Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="email">Email</label>
+            <input type="text" pInputText id="email" [(ngModel)]="item.email" required autofocus [disabled]="true" />
+            <small class="p-error" *ngIf="submitted && !item.email">Email is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="subject">Subject</label>
+            <input type="text" pInputText id="subject" [(ngModel)]="item.subject" required autofocus
+                [disabled]="true" />
+            <small class="p-error" *ngIf="submitted && !item.subject">Subject is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="response">Response</label>
+            <textarea id="response" pInputTextarea [(ngModel)]="item.response" required rows="3" cols="20"
+                [disabled]="responded"></textarea>
+            <small class="p-error" *ngIf="submitted && !item.response">Response is required.</small>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="sendResponse()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

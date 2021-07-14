@@ -1,0 +1,50 @@
+<div class="card p-0">
+    <p-table #dt [value]="rows" [rows]="10" [paginator]="true" [globalFilterFields]="['name','email','profession']"
+        [rowHover]="true" dataKey="id" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Viewers</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="price">Email <p-sortIcon field="price"></p-sortIcon>
+                </th>
+                <th pSortableColumn="category">Profession <p-sortIcon field="category"></p-sortIcon>
+                </th>
+                <th pSortableColumn="dob">BirthDate <p-sortIcon field="dob"></p-sortIcon>
+                </th>
+                <th>Action </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td>{{item.name}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.profession}}</td>
+                <td>{{item.dob}}</td>
+                <td class="">
+                    <button pButton pRipple icon="pi pi-pencil" *ngIf="item?.isActive" class="btnColor p-button-rounded p-button-success p-mr-2"
+                        (click)="editItem(item)"></button>
+                    <button pButton pRipple icon="pi pi-times" *ngIf="!item?.isActive" class="btnColor p-button-rounded p-button-warning p-mr-2"
+                        (click)="activateItem(item)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{rows ? rows.length : 0 }} artists.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

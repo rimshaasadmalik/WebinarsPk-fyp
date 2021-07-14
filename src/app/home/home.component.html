@@ -1,0 +1,72 @@
+<app-home-nav></app-home-nav>
+
+<div class="container-fluid">
+    <div class="box">
+        <img src="assets/images/home1.jpeg" alt="Home">
+    </div>
+    <div class="box overlay">
+        <span>Discover, <span style="color: #333;">Explore and book <br> events with Us.</span></span>
+        <!-- <button type="button" class="ml-1 btnColor p-button-raised p-button-text" icon="pi pi-search" pButton pRipple
+            [routerLink]="['/home/explore']" label="Want to Explore More..."></button> -->
+    </div>
+</div>
+
+
+<!-- <div class="card">
+    <p-dataView #dv [value]="products" [paginator]="true" [rows]="9" filterBy="name" [sortField]="sortField"
+        [sortOrder]="sortOrder" layout="grid">
+        <ng-template pTemplate="header">
+            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+                <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By Price"
+                    (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown>
+                <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+                    <i class="pi pi-search"></i>
+                    <input type="search" pInputText placeholder="Search by Name"
+                        (input)="dv.filter($event.target.value)">
+                </span>
+                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+            </div>
+        </ng-template>
+        <ng-template let-item pTemplate="listItem">
+            <div class="p-col-12">
+                <div class="product-list-item">
+                    <img [src]="'assets/showcase/products/' + item.eventImage" [alt]="item.name" />
+                    <div class="product-list-detail">
+                        <div class="product-name">{{item?.name}}</div>
+                        <div class="product-description">{{item?.description}}</div>
+                        <div class="product-description">{{item?.eventDate | date}}-{{item?.eventTime}}</div>
+                        <i class="pi pi-tag product-category-icon"></i><span
+                            class="product-category">{{item?.category}}</span>
+                    </div>
+                    <div class="product-list-action">
+                        <span class="product-price">PKR {{item?.amount}}</span>
+                        <p-button icon="pi pi-shopping-cart" label="Book Now" (click)="onBook(item)"></p-button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template let-item pTemplate="gridItem">
+            <div class="p-col-12 p-md-4">
+                <div class="product-grid-item card">
+                    <div class="product-grid-item-top">
+                        <div>
+                            <i class="pi pi-tag product-category-icon"></i>
+                            <span class="product-category">{{item?.category}}</span>
+                        </div>
+                    </div>
+                    <div class="product-grid-item-content">
+                        <img [src]="'assets/showcase/products/' + item.eventImage" [alt]="item.eventImage" />
+                        <div class="product-name">{{item?.name}}</div>
+                        <div class="product-description">{{item?.description}}</div>
+                        <div class="product-description">{{item?.eventDate | date}}-{{item?.eventTime}}</div>
+                    </div>
+                    <div class="product-grid-item-bottom">
+                        <span class="product-price">PKR {{item?.amount}}</span>
+                        <p-button icon="pi pi-shopping-cart" (click)="onBook(item)"> </p-button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
+</div> -->
+<!-- <div class="homeImg"></div> -->

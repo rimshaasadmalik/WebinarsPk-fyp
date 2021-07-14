@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col-md-3">
+        <img src="{{userProfile?.image}}" alt="{{userProfile?.image}}" class="avatar">
+        <input id="image" #imageFile (change)="onChange($event)" type="file" placeholder="" pInputText accept="image/*">
+    </div>
+    <div class="col-md-9">
+        <div class="card m-2 p-2">
+            <!-- <h5 class="text-center">Profile</h5> -->
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="name">Name</label>
+                    <input id="name" disabled [ngModel]="userProfile?.name" type="text" pInputText>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="email">Email</label>
+                    <input id="email" disabled [ngModel]="userProfile?.email" type="email" pInputText>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="phoneno">Phone</label>
+                    <input id="phoneno" disabled [ngModel]="userProfile?.phoneno" type="tel" pInputText>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="dob">BirthDate</label>
+                    <input id="dob" disabled [ngModel]="userProfile?.dob" type="text" pInputText>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="profession">Profession</label>
+                    <input id="profession" disabled [ngModel]="userProfile?.profession" type="text" pInputText>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="account">Account</label>
+                    <input id="account" disabled value="{{userProfile?.bname}}-{{userProfile?.accountno}}" type="text"
+                        pInputText>
+                </div>
+                <div class="p-field p-col-12">
+                    <label for="bio">Bio Data</label>
+                    <textarea id="bio" disabled [ngModel]="userProfile?.bio" type="text" rows="4"
+                        pInputTextarea></textarea>
+                </div>
+            </div>
+
+            <button pButton type="button" label="Edit Profile" icon="fa fa-pencil"
+                class="text-center btnColor p-button-raised p-button-text" (click)="showDialog()"></button>
+        </div>
+    </div>
+</div>
+
+
+<p-dialog [(visible)]="editDialog" [style]="{width: '1000px'}" header="Edit Profile" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-md-6">
+                <label for="name">Name</label>
+                <input id="name" [(ngModel)]="userProfile.name" type="text" pInputText>
+            </div>
+            <div class="p-field p-col-12 p-md-6">
+                <label for="email">Email</label>
+                <input id="email" disabled [ngModel]="userProfile?.email" type="email" pInputText>
+            </div>
+            <div class="p-field p-col-12 p-md-6">
+                <label for="phoneno">Phone</label>
+                <input id="phoneno" [(ngModel)]="userProfile.phoneno" type="tel" pInputText>
+            </div>
+            <div class="p-field p-col-12 p-md-6">
+                <label for="dob">BirthDate</label>
+                <input id="dob" [(ngModel)]="userProfile.dob" type="date" max="2003-01-01" pInputText>
+            </div>
+            <div class="p-field p-col-12 p-md-6">
+                <label for="profession">Profession</label>
+                <!-- <input id="profession" [(ngModel)]="userProfile.profession" type="text" pInputText> -->
+                <select name="profession" id="profession" [(ngModel)]="userProfile.profession"
+                    class="form-control input-underline input-lg">
+                    <option [value]="profession" *ngFor="let profession of professions"> {{profession}}</option>
+                </select>
+            </div>
+            <div class="p-field p-col-12">
+                <label for="bio">Bio Data</label>
+                <textarea id="bio" [(ngModel)]="userProfile.bio" type="text" rows="4" pInputTextarea></textarea>
+            </div>
+            <div class="p-field p-col-12 p-md-3">
+                <label for="bname">Bank</label>
+                <p-dropdown appendTo="body" inputId="bank" id="bname" name="bank" [options]="banks" optionLabel="label"
+                    placeholder="Select Bank" (onChange)="changeBank($event)" [(ngModel)]="selectedBank" required
+                    autofocus>
+                </p-dropdown>
+                <!-- <input id="bname" [(ngModel)]="userProfile.bname" type="text" pInputText> -->
+            </div>
+            <div class="p-field p-col-12 p-md-3">
+                <label for="bcode">Branch Code</label>
+                <input id="bcode" [(ngModel)]="userProfile.bcode" type="text" pInputText>
+            </div>
+            <div class="p-field p-col-12 p-md-3">
+                <label for="accountno">Account No.</label>
+                <input id="accountno" [(ngModel)]="userProfile.accountno" type="text" pInputText>
+            </div>
+            <div class="p-field p-col-12 p-md-3">
+                <label for="accounttitle">Account Title</label>
+                <input id="accounttitle" [(ngModel)]="userProfile.accounttitle" type="text" pInputText>
+            </div>
+
+
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text btnColor"
+            (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text btnColor"
+            (click)="updateProfile()"></button>
+    </ng-template>
+</p-dialog>

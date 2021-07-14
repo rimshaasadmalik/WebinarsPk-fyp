@@ -1,0 +1,22 @@
+.headerBtns {
+    button {
+        background-color: rgb(190, 153, 49);
+    }
+
+    button:enabled:hover{
+        background-color: rgb(190, 153, 49);
+    }
+}
+
+
+:host ::ng-deep {
+    .p-dialog .p-dialog-footer button {
+        background-color: rgb(190, 153, 49);
+        color: white;
+    }
+
+    .p-dialog .p-dialog-footer button:enabled:hover {
+        background-color: rgb(190, 153, 49);
+        color: white;
+    }
+}

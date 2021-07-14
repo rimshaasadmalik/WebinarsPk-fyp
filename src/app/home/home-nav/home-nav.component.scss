@@ -1,0 +1,18 @@
+.btnColor {
+    color: rgb(190, 153, 49);
+    background-color: white;
+}
+
+.p-button.p-button-text:enabled:hover {
+
+    color: #d1a42a;
+    border-color: transparent;
+}
+
+:host ::ng-deep .p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link .p-menuitem-text {
+    color: rgb(190, 153, 49);
+}
+
+:host ::ng-deep .p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link .p-menuitem-icon {
+    color: rgb(190, 153, 49);
+}

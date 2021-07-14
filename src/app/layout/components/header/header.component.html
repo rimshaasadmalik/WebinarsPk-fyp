@@ -1,0 +1,79 @@
+<nav class="navbar navbar-expand-lg fixed-top" style="z-index: 1;">
+    <a class="navbar-brand" [routerLink]="['/']">Webinars PK</a>
+    <button (click)="toggleSidebar()" class="navbar-toggler" type="button">
+        <i aria-hidden="true" class="fa fa-bars text-muted"></i>
+    </button>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+            &nbsp;
+            <li class="nav-item dropdown" ngbDropdown *ngIf="user.role=='viewer' && event!= null">
+                <a class="nav-link" (click)="openCart()" ngbDropdownToggle>
+                    <i class="pi pi-shopping-cart"></i> <b class="caret"></b><span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item dropdown" ngbDropdown *ngIf="user.role=='viewer'">
+                <a class="nav-link" (click)="viewNotifications()" ngbDropdownToggle>
+                    <i class="fa fa-bell"></i> <b class="caret"></b><span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item dropdown" ngbDropdown>
+                <a class="nav-link" href="javascript:void(0)" ngbDropdownToggle>
+                    <i class="fa fa-user"></i> {{user.username}} <b class="caret"></b>
+                </a>
+                <div class="dropdown-menu-right" ngbDropdownMenu>
+                    <a (click)="onLoggedout()" class="dropdown-item">
+                        <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' }}
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<p-dialog header="Book Event Now" [(visible)]="cartDialog" [position]="position" [modal]="true"
+    [style]="{width: '35vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <div class="border p-2" *ngIf="event">
+        <b>{{event?.name}}</b>
+        <p>{{event?.description}}</p>
+        <p>PKR: {{event?.amount}}</p>
+        <p-button icon="pi pi-check" (click)="onBookNow(event)" label="Book Now" styleClass="p-button-text">
+        </p-button>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="cartDialog=false" label="Ok" styleClass="p-button-text">
+        </p-button>
+    </ng-template>
+</p-dialog>
+
+<!-- <p-dialog header="Book Event Now" [(visible)]="cartDialog" [position]="position" [modal]="true"
+    [style]="{width: '35vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <ng-template pTemplate="content">
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-md-12">
+                <label for="amount">Amount</label>
+                <input id="amount" [(ngModel)]="amount" type="number" pInputText required>
+                <small class="p-invalid" *ngIf="submitted && !amount">Amount is required.</small>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="notificationDialog=false" label="Ok" styleClass="p-button-text">
+        </p-button>
+    </ng-template>
+</p-dialog> -->
+
+<p-dialog header="Notifications" [(visible)]="notificationDialog" [position]="position" [modal]="true"
+    [style]="{width: '35vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <div *ngFor="let event of events">
+        <b>{{event?.name}}</b>
+        <p>{{event?.amount}}</p>
+    </div>
+    <div *ngFor="let notification of notifications">
+        <b>{{notification?.title}} - {{notification?.createdAt | date:'short'}}</b>
+        <p>{{notification?.message}}</p>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="notificationDialog=false" label="Ok" styleClass="p-button-text">
+        </p-button>
+    </ng-template>
+</p-dialog>

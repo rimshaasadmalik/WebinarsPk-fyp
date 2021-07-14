@@ -1,0 +1,65 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "label": "IT"
+        },
+        {
+            "id": 2,
+            "label": "Religious"
+        },
+        {
+            "id": 3,
+            "label": "Science"
+        },
+        {
+            "id": 4,
+            "label": "Poetic"
+        },
+        {
+            "id": 5,
+            "label": "Education"
+        }
+    ],
+    "banks": [
+        {
+            "id": 1,
+            "label": "HBL"
+        },
+        {
+            "id": 2,
+            "label": "UBL"
+        },
+        {
+            "id": 3,
+            "label": "MCB"
+        }
+    ],
+    "durations": [
+        {
+            "id": 1,
+            "label": "30",
+            "value": 30
+        },
+        {
+            "id": 2,
+            "label": "45",
+            "value": 45
+        },
+        {
+            "id": 3,
+            "label": "60",
+            "value": 60
+        },
+        {
+            "id": 3,
+            "label": "90",
+            "value": 90
+        },
+        {
+            "id": 3,
+            "label": "120",
+            "value": 120
+        }
+    ]
+}

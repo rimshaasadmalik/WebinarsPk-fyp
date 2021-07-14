@@ -1,0 +1,92 @@
+<div class="card p-shadow-12">
+    <p-table #dt [value]="faqs" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['title', 'message']" [rowHover]="true" dataKey="_id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between headerBtns">
+                <h5 class="p-m-0">Faqs</h5>
+                <button pButton pRipple label="New" pTooltip="Add New Faq" tooltipPosition="bottom" icon="pi pi-plus"
+                    class="p-button-info p-mr-2" (click)="openNew()"></button>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="title">Title <p-sortIcon field="title"></p-sortIcon>
+                </th>
+                <th pSortableColumn="message">Message <p-sortIcon field="message"></p-sortIcon>
+                </th>
+                <th class="p-text-center">Action </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td>{{item?.title}}</td>
+                <td class="p-text-nowrap p-text-truncate">{{item?.message}}</td>
+                <td class="p-py-1 p-text-center">
+                    <!-- <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-primary p-mr-2"
+                        (click)="viewItem(item)"></button> -->
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                        (click)="editItem(item)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                        (click)="deleteItem(item)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <tr>
+                <td colspan="3">In total there are {{faqs ? faqs.length : 0 }} Faqs.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="itemAddDialog" [style]="{width: '1000px'}" header="Faq Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="title">Title</label>
+            <input type="text" pInputText id="title" [(ngModel)]="item.title" required autofocus
+                [disabled]="disabled" />
+            <small class="p-error" *ngIf="submitted && !item.title">Title is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="message">Message</label>
+            <textarea id="message" pInputTextarea [(ngModel)]="item.message" required rows="3" cols="20"
+                [disabled]="disabled"></textarea>
+            <small class="p-error" *ngIf="submitted && !item.message">Message is required.</small>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveItem()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="itemDialog" [style]="{width: '1000px'}" header="Faq Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="title">Title</label>
+            <input type="text" pInputText id="title" [(ngModel)]="item.title" required autofocus
+                [disabled]="disabled" />
+            <small class="p-error" *ngIf="submitted && !item.title">Title is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="message">Message</label>
+            <textarea id="message" pInputTextarea [(ngModel)]="item.message" required rows="3" cols="20"
+                [disabled]="disabled"></textarea>
+            <small class="p-error" *ngIf="submitted && !item.message">Message is required.</small>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="btnColor p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="btnColor p-button-text" (click)="updateItem()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

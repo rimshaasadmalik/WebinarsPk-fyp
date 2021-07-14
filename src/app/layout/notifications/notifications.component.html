@@ -1,0 +1,15 @@
+{{ message | async | json }}
+<div class="card-body">
+    <div class="list-group">
+        <a class="list-group-item clearfix d-block" *ngFor="let message of messages">
+            <i class="fa fa-comment fa-fw"></i>
+            <div *ngIf="!message">
+                <div>{{ message?.notification?.title | async | json }}</div>
+                <div>{{ message?.notification?.body | async | json }}</div>
+            </div>
+            <span class="float-right text-muted small"><em>a minute ago</em></span>
+        </a>
+    </div>
+    <!-- /.list-group -->
+    <!-- <a class="btn btn-default btn-block">View All Alerts</a> -->
+</div>

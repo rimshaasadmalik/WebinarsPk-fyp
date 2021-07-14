@@ -1,0 +1,104 @@
+<div class="card p-shadow-12">
+    <p-table #dt [value]="bookings" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['userId.username', 'payment.status', 'payment.amount']" [rowHover]="true" dataKey="_id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Bookings</h5>
+                <!-- <button pButton pRipple label="New" pTooltip="Add New Item" tooltipPosition="bottom" icon="pi pi-plus"
+                    class="p-button-info p-mr-2" (click)="openNew()"></button> -->
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="username">User <p-sortIcon field="username"></p-sortIcon>
+                </th>
+                <!-- <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon>
+                </th> -->
+                <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon>
+                </th>
+                <th *ngIf="!isFree" pSortableColumn="amount">Amount (PKR)<p-sortIcon field="amount"></p-sortIcon>
+                </th>
+                <th *ngIf="isPaid">Account No</th>
+                <th *ngIf="!isFree">Receipt</th>
+                <th class="p-text-center">Action </th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td>{{item?.userId?.username}}</td>
+                <!-- <td>{{item?.userId?.email}}</td> -->
+                <td>{{item?.payment?.status}}</td>
+                <td *ngIf="!isFree">{{item?.amount | number}}</td>
+                <!-- <td *ngIf="item?.event?.amount == 0">Free</td> -->
+                <td *ngIf="isPaid">{{item?.payment?.accountno }}</td>
+                <td *ngIf="!isFree"><a href="{{item?.receipt}}" target="_blank" rel="noopener noreferrer"><img
+                            src="{{item?.receipt}}" height="50px" alt="{{item?.receipt}}" class="avatar"></a> </td>
+                <td class="p-py-1 p-text-center">
+                    <!-- <button pButton pRipple icon="fa fa-fw fa-money" class="p-button-rounded p-button-primary p-mr-2"
+                        (click)="onPayment(item)" *ngIf="isPaid" [disabled]="item?.amount == 0"></button> -->
+                    <button pButton pRipple icon="fa fa-check" class="p-button-rounded p-button-success p-mr-2"
+                        (click)="onFreePayment(item)" *ngIf="isFree"
+                        [disabled]="item?.payment?.status == 'Approved'"></button>
+                    <button pButton pRipple icon="fa fa-check" class="p-button-rounded p-button-success p-mr-2"
+                        (click)="onApprove(item)" *ngIf="isPaid"
+                        [disabled]="item?.payment?.status == 'Approved'"></button>
+                    <button pButton pRipple icon="fa fa-times" class="p-button-rounded p-button-warning p-mr-2"
+                        (click)="onDisapprove(item)" *ngIf="isPaid"
+                        [disabled]="item?.payment?.status == 'Approved'"></button>
+                    <!-- <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-success p-mr-2"
+                        (click)="viewItem(item)"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                        (click)="editItem(item)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                        (click)="deleteItem(item)"></button> -->
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <tr>
+                <td colspan="2">In total there are {{bookings ? bookings.length : 0 }} Bookings for this event.</td>
+                <td *ngIf="isPaid" colspan="2"></td>
+                <td *ngIf="isPaid" colspan="2" class="p-text-right">Total Payment is {{paymentAmount | number:'1.2-2'}}
+                    &
+                    Pending is {{pendingAmount | number:'1.2-2'}}.</td>
+                <td *ngIf="isFree" colspan="1" class="p-text-right"></td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <!-- <tr>
+                <td colspan="4"> In total there are {{items ? items.length : 0 }} Items.</td>
+                <td> Total Stock Value is PKR {{totalStockValue}}.</td>
+            </tr>
+            <div class="p-d-flex p-ai-center p-jc-between">
+
+            </div>
+            <div class="p-d-flex p-ai-center p-jc-between">
+
+            </div> -->
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog header="Payment and Invite" [(visible)]="paymentDialog" [style]="{width: '500px'}">
+    <ng-template pTemplate="content">
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-md-12">
+                <label for="amount">Amount</label>
+                <input id="amount" [(ngModel)]="amount" type="number" pInputText required>
+                <small class="p-invalid" *ngIf="submitted && !amount">Amount is required.</small>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="onPaymentSubmit()" label="Ok" styleClass="p-button-text"
+            [disabled]="disabled">
+        </p-button>
+    </ng-template>
+</p-dialog>

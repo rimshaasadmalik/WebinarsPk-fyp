@@ -1,0 +1,46 @@
+<app-home-nav></app-home-nav>
+<div class="card mx-auto mt-5 pb-4 container">
+    <h5 class="text-center mt-3">Contact Us</h5>
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-12 p-md-6">
+            <label for="name">Name</label>
+            <input id="name" [(ngModel)]="name" type="text" pInputText>
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+            <label for="email">Email</label>
+            <input id="email" [(ngModel)]="email" type="email" pInputText>
+        </div>
+        <div class="p-field p-col-12 p-md-12">
+            <label for="subject">Subject</label>
+            <input id="subject" [(ngModel)]="subject" type="text" pInputText>
+        </div>
+        <div class="p-field p-col-12">
+            <label for="message">Message</label>
+            <textarea id="message" [(ngModel)]="message" type="text" rows="4" pInputTextarea></textarea>
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+            <label for="city">City</label>
+            <input id="city" [(ngModel)]="city" type="text" pInputText>
+        </div>
+        <!-- <div class="p-field p-col-12 p-md-3">
+            <label for="state">State</label>
+            <p-dropdown inputId="state" [options]="states" [(ngModel)]="selectedState" placeholder="Select"
+                optionLabel="name"></p-dropdown>
+        </div> -->
+        <div class="p-field p-col-12 p-md-6">
+            <label for="zip">Zip</label>
+            <input id="zip" [(ngModel)]="zip" type="text" pInputText>
+        </div>
+    </div>
+
+    <button pButton type="button" label="Submit" class="text-center btnColor p-button-raised p-button-text" (click)="onSubmit()"></button>
+</div>
+
+<!-- <p-dialog header="Captcha Verification" [(visible)]="display" [style]="{width: '354px'}" [baseZIndex]="10000">
+    <div class="card">
+        <p-captcha siteKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" (onResponse)="showResponse($event)"></p-captcha>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="onSubmit()" label="Ok" styleClass="p-button-text" [disabled]="disabled"></p-button>
+    </ng-template>
+</p-dialog> -->

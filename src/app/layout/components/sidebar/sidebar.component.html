@@ -1,0 +1,154 @@
+<nav [ngClass]="{ sidebarPushRight: isActive, collapsed: collapsed }" class="sidebar">
+    <div class="list-group">
+
+        <!-- <a [routerLink]="['../'+mitem.interfacePath]" class="list-group-item">
+            <i [ngClass]="mitem.interfaceIcon"></i>&nbsp;
+            <span>{{ mitem.interfaceName  }}</span>
+        </a> -->
+
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/dashboard']" class="list-group-item" >
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;
+            <span>{{ 'Dashboard' }}</span>
+        </a>
+
+        <!-- Admin -->
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/cp/artists']" class="list-group-item"
+            *ngIf="user.role=='admin'">
+            <i class="fa fa-fw fa-users"></i>&nbsp;
+            <span>{{ 'Artists' }}</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/cp/viewers']" class="list-group-item"
+            *ngIf="user.role=='admin'">
+            <i class="fa fa-fw fa-users"></i>&nbsp;
+            <span>{{ 'Viewers' }}</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/cp/events']" class="list-group-item"
+            *ngIf="user.role=='admin'">
+            <i class="fa fa-fw fa-calendar"></i>&nbsp;
+            <span>{{ 'Events' }}</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/cp/faqs']" class="list-group-item"
+            *ngIf="user.role=='admin'">
+            <i class="fa fa-fw fa-comments-o"></i>&nbsp;
+            <span>{{ 'Faqs' }}</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/cp/requests']" class="list-group-item"
+            *ngIf="user.role=='admin'">
+            <i class="fa fa-fw fa-envelope-open-o"></i>&nbsp;
+            <span>{{ 'Requests' }}</span>
+        </a>
+
+        <!-- Organizer -->
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/organizer/profile']" class="list-group-item"
+            *ngIf="user.role=='organizer'">
+            <i class="fa fa-fw fa-user"></i>&nbsp;
+            <span>{{ 'Profile' }}</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/events']" class="list-group-item"
+            *ngIf="user.role=='organizer'">
+            <i class="fa fa-fw fa-calendar"></i>&nbsp;
+            <span>{{ 'Events' }}</span>
+        </a>
+
+        <!-- Viewer -->
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/viewer/profile']" class="list-group-item"
+            *ngIf="user.role=='viewer'">
+            <i class="fa fa-fw fa-user"></i>&nbsp;
+            <span>{{ 'Profile' }}</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/events']" class="list-group-item"
+            *ngIf="user.role=='viewer'">
+            <i class="fa fa-fw fa-calendar"></i>&nbsp;
+            <span>{{ 'Events' }}</span>
+        </a>
+        <a [routerLinkActive]="['router-link-active']" [routerLink]="['/events/booked']" class="list-group-item"
+            *ngIf="user.role=='viewer'">
+            <i class="fa fa-fw fa-calendar-o"></i>&nbsp;
+            <span>{{ 'My Events' }}</span>
+        </a>
+
+
+
+
+
+        <!-- <a [routerLinkActive]="['router-link-active']" [routerLink]="['/home']" class="list-group-item">
+            <i class="fa fa-fw fa-money"></i>&nbsp;
+            <span>{{ 'Home'  }}</span>
+        </a> -->
+        <!-- <a [routerLinkActive]="['router-link-active']" [routerLink]="['/payments']" class="list-group-item"
+            *ngIf="user.role=='organizer'">
+            <i class="fa fa-fw fa-money"></i>&nbsp;
+            <span>{{ 'Payments'  }}</span>
+        </a> -->
+
+
+
+        <!-- <a [routerLinkActive]="['router-link-active']" [routerLink]="['/forms']" class="list-group-item">
+            <i class="fa fa-fw fa-edit"></i>&nbsp;
+            <span>{{ 'Forms'  }}</span>
+        </a> -->
+        <!-- <a [routerLinkActive]="['router-link-active']" [routerLink]="['/bs-element']" class="list-group-item">
+            <i class="fa fa-fw fa-desktop"></i>&nbsp;
+            <span>{{ 'Bootstrap Element'  }}</span>
+        </a> -->
+        <!-- <a [routerLinkActive]="['router-link-active']" [routerLink]="['/grid']" class="list-group-item">
+            <i class="fa fa-fw fa-wrench"></i>&nbsp;
+            <span>{{ 'Bootstrap Grid'  }}</span>
+        </a> -->
+        <!-- <a [routerLinkActive]="['router-link-active']" [routerLink]="['/components']" class="list-group-item">
+            <i class="fa fa-th-list"></i>&nbsp;
+            <span>{{ 'Component'  }}</span>
+        </a> -->
+
+
+    </div>
+    <div class="list-group">
+        <div class="header-fields p-pt-0">
+            <div class="nested-menu">
+                <a (click)="addExpandClass('profile')" class="list-group-item">
+                    <span><i class="fa fa-user"></i>&nbsp; {{user.firstName}}</span>
+                </a>
+                <li [class.expand]="showMenu === 'profile'" class="nested">
+                    <ul class="submenu">
+                        <!-- <li>
+                            <a (click)="viewNotifications()">
+                                <span><i class="fa fa-bell"></i> {{ 'Notifications'  }}</span>
+                            </a>
+                        </li> -->
+                        <!--<li>
+                            <a href="javascript:void(0)">
+                                <span><i class="fa fa-fw fa-envelope"></i> {{ 'Inbox'  }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <span><i class="fa fa-fw fa-gear"></i> {{ 'Settings'  }}</span>
+                            </a>
+                        </li> -->
+                        <li>
+                            <a (click)="onLoggedout()">
+                                <span><i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </div>
+        </div>
+    </div>
+    <div (click)="toggleCollapsed()" [ngClass]="{ collapsed: collapsed }" class="toggle-button">
+        <i class="fa fa-fw fa-angle-double-{{ collapsed ? 'right' : 'left' }}"></i>&nbsp;
+        <span>{{ 'Collapse Sidebar' }}</span>
+    </div>
+</nav>
+
+<p-dialog header="Notifications" [(visible)]="notificationDialog" [position]="position" [modal]="true"
+    [style]="{width: '95vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <div *ngFor="let notification of notifications">
+        <b>{{notification.title}}</b>
+        <p>{{notification.details}}</p>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="notificationDialog=false" label="Ok" styleClass="p-button-text">
+        </p-button>
+    </ng-template>
+</p-dialog>

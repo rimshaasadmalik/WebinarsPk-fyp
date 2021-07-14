@@ -1,0 +1,61 @@
+<div [@routerTransition]>
+    <!-- <h2 class="text-muted">Dashboard <small>Package Delivery System</small></h2> -->
+    <!-- <h2 class="text-muted"> Al Nisr Al Saree For Delivery</h2> -->
+    <!-- <div class="row">
+        <div class="col-md-12">
+            <ngb-carousel>
+                <ng-template *ngFor="let slider of sliders" ngbSlide>
+                    <img [src]="slider.imagePath" alt="Random first slide" class="img-fluid mx-auto d-block"
+                        width="100%" />
+                    <div class="carousel-caption">
+                        <h3>{{ slider.label }}</h3>
+                        <p>{{ slider.text }}</p>
+                    </div>
+                </ng-template>
+            </ngb-carousel>
+        </div>
+    </div> -->
+    <!-- <hr /> -->
+    <div class="row" *ngIf="role === 'admin'">
+        <div class="col-xl-12 col-lg-12 mb-1">
+            <app-stat [bgClass]="'primary'" [count]="events" [icon]="'fa fa-youtube-play'" [label]="'Events'"
+                [link]="'cp/events'">
+            </app-stat>
+        </div>
+        <div class="col-xl-12 col-lg-12 mb-1">
+            <app-stat [bgClass]="'danger'" [count]="artists" [icon]="'fa-users'" [label]="'Artists'" [link]="'cp/artists'"></app-stat>
+        </div>
+        <div class="col-xl-12 col-lg-12 mb-1">
+            <app-stat [bgClass]="'success'" [count]="viewers" [icon]="'fa-users'" [label]="'Viewers'" [link]="'cp/viewers'"></app-stat>
+        </div>
+        <div class="col-xl-12 col-lg-12">
+            <app-stat [bgClass]="'warning'" [count]="requests" [icon]="'fa-comments'" [label]="'User Requests'" [link]="'cp/requests'"></app-stat>
+        </div>
+
+    </div>
+    <div class="row" *ngIf="role === 'organizer'">
+        <div class="col-xl-12 col-lg-12 mb-2">
+            <app-stat [bgClass]="'primary'" [count]="events" [icon]="'fa fa-youtube-play'" [label]="'Events'"
+                [link]="'events'">
+            </app-stat>
+        </div>
+        <div class="col-xl-12 col-lg-12 mb-2">
+            <app-stat [bgClass]="'success'" [count]="payments" [icon]="'fa-money'" [label]="'Earnings'"
+                [link]="'events'"></app-stat>
+        </div>
+
+    </div>
+
+    <div class="row" *ngIf="role === 'viewer'">
+        <div class="col-xl-12 col-lg-12 mb-2">
+            <app-stat [bgClass]="'primary'" [count]="events" [icon]="'fa fa-youtube-play'" [label]="'Events'"
+                [link]="'events'">
+            </app-stat>
+        </div>
+        <div class="col-xl-12 col-lg-12 mb-2">
+            <app-stat [bgClass]="'success'" [count]="bookings" [icon]="'fa-ticket'" [label]="'Bookings'"
+                [link]="'events/booked'"></app-stat>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<app-home-nav></app-home-nav>
+<div class="mt-3">
+    <p-accordion *ngFor="let faq of faqs;">
+        <p-accordionTab header="{{faq?.title}}" >
+            <p>{{faq?.message}}.</p>
+        </p-accordionTab>
+
+    </p-accordion>
+
+</div>

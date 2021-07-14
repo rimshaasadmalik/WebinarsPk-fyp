@@ -1,0 +1,91 @@
+<div [@routerTransition] class="login-page">
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <img class="user-avatar" src="assets/images/logo.png" width="150px" style="background-color: white;" />
+            <h1>Webinars Registration</h1>
+            <form role="form">
+                <div class="form-content">
+                    <div class="form-group">
+                        <label for="registeras" class="input-label">Register as</label>
+                        <select name="registeras" id="registeras" (change)="onRegisterAs($event.target.value)"
+                            [(ngModel)]="registeras" class="form-control input-underline input-lg">
+                            <option value="isOrganizer">Organizer</option>
+                            <option value="isViewer">Viewer</option>
+                        </select>
+                    </div>
+                    <!-- <div>
+                        <span>Register as: </span>
+                        <button class="btn btn-primary m-1 p-1 rounded-btn" (click)='onOrganizer()'>Organizer</button>
+                        <button class="btn btn-primary m-1 p-1 rounded-btn" (click)='onViewer()'>Viewer</button>
+                    </div> -->
+                    <div class="form-group">
+                        <label for="email" class="input-label">Email</label>
+                        <input class="form-control input-underline input-lg" type="text" [(ngModel)]="email"
+                            name="email" id="email" [disabled]="isEmailVerified" />
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="input-label">Name</label>
+                        <input class="form-control input-underline input-lg" type="text" [(ngModel)]="name" name="name"
+                            id="name" [disabled]="isEmailVerified" />
+                    </div>
+                    <div class="form-group">
+                        <label for="profession" class="input-label">Profession</label>
+                        <select name="profession" id="profession" [(ngModel)]="profession"
+                            class="form-control input-underline input-lg">
+                            <option value="Teacher">Teacher</option>
+                            <option value="Student">Student</option>
+                            <option value="Programmer">Programmer</option>
+                            <option value="Scientist">Scientist</option>
+                        </select>
+                    </div>
+                    <div class="form-group" *ngIf="!hidden">
+                        <label for="interests" class="input-label">Interests</label>
+                        <select name="interests" id="interests" [(ngModel)]="interests"
+                            class="form-control input-underline input-lg">
+                            <option value="Coding">Coding</option>
+                            <option value="Gaming">Gaming</option>
+                            <option value="Religious">Religious</option>
+                            <option value="Scientific">Scientific</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthdate" class="input-label">Birth Date</label>
+                        <input [placeholder]="'Birth Date'" class="form-control input-underline input-lg" type="date"
+                            [(ngModel)]="birthdate" id="birthdate" name="birthdate" max="2003-01-01"/>
+                    </div>
+                    <!-- <div class="form-group">
+                        <input [placeholder]="'Phone (xxxxxxxxxxx)'" class="form-control input-underline input-lg"
+                            type="tel" [(ngModel)]="phone" name="phone" pattern="\d{4}\-\d{7}" />
+                    </div> -->
+
+                    <!-- <div class="form-group" *ngIf="!hidden">
+                        <p-multiSelect [options]="categories" [(ngModel)]="interests" name="interests"
+                            optionLabel="label" display="chip"></p-multiSelect>
+                    </div> -->
+                    <div class="form-group" *ngIf="!isEmailVerified">
+                        <label for="password" class="input-label">Password</label>
+                        <input class="form-control input-underline input-lg" type="password" [(ngModel)]="password"
+                            name="password" id="password" />
+                    </div>
+                    <div class="form-group" *ngIf="!isEmailVerified">
+                        <label for="cpassword" class="input-label">Confirm Password</label>
+                        <input class="form-control input-underline input-lg" type="password"
+                            [(ngModel)]="confirmpassword" name="password" id="cpassword" />
+                        <span *ngIf="!isEmailVerified">
+                            <a [routerLink]="['/login']" class="forgetBtn"><i>Log in Now</i></a>
+                        </span>
+                    </div>
+                    <div class="form-group" *ngIf="isEmailVerified">
+                        <label for="otp" class="input-label">Registration Code</label>
+                        <input class="form-control input-underline input-lg" type="text" [(ngModel)]="otp" name="otp"
+                            id="otp" />
+                        <span><a [routerLink]="['/login']" class="forgetBtn"><i>Log in Now</i></a></span>
+                    </div>
+
+                </div>
+                <a (click)="onVerify()" class="btn rounded-btn" *ngIf="isEmailVerified">{{ 'Verify' }}</a>&nbsp;
+                <a (click)="onRegister()" class="btn rounded-btn" *ngIf="!isEmailVerified">{{ 'Register' }}</a>&nbsp;
+            </form>
+        </div>
+    </div>
+</div>

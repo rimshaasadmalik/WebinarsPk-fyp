@@ -1,0 +1,287 @@
+<div class="card">
+    <p-dataView #dv [value]="events" [paginator]="true" [rows]="9" filterBy="name" [sortField]="sortField"
+        [sortOrder]="sortOrder" layout="grid">
+        <ng-template pTemplate="header">
+            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+                <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By Price"
+                    (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown>
+                <button type="button" class="ml-1" icon="pi pi-plus" pButton pRipple (click)="onAdd()" label="Add"
+                    *ngIf="user.role=='organizer'"></button>
+                <!-- <button type="button" class="ml-1" icon="pi pi-check" pButton pRipple (click)="onBooked()"
+                    label="Booked" *ngIf="!booked"></button>
+                <button type="button" class="ml-1" icon="pi pi-check" pButton pRipple (click)="onAll()" label="All"
+                    *ngIf="booked"></button> -->
+                <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+                    <i class="pi pi-search"></i>
+                    <input type="search" pInputText placeholder="Search by Name"
+                        (input)="dv.filter($event.target.value)">
+                </span>
+                <!-- <p-dataViewLayoutOptions></p-dataViewLayoutOptions> -->
+            </div>
+        </ng-template>
+        <!-- <ng-template let-event pTemplate="listItem">
+            <div class="p-col-12">
+                <div class="product-list-item" *ngIf="booked">
+                    <img [src]="'assets/showcase/products/' + event?.event?.eventImage"
+                        [alt]="event?.event?.eventImage" />
+                    <div class="product-list-detail">
+                        <div class="product-name">{{event?.event?.name}}</div>
+                        <div class="product-description">{{event?.event?.description}}</div>
+                        <i class="pi pi-tag product-category-icon"></i><span
+                            class="product-category">{{event?.event?.category}}</span>
+                    </div>
+                    <div class="product-list-action">
+                        <span class="product-price">PKR {{event?.event?.amount}}</span>
+                    </div>
+                </div>
+                <div class="product-list-item" *ngIf="!booked">
+                    <img [src]="'assets/showcase/products/' + event?.eventImage" [alt]="event?.eventImage" />
+                    <div class="product-list-detail">
+                        <div class="product-name">{{event?.name}}</div>
+                        <div class="product-description">{{event?.description}}</div>
+                        <i class="pi pi-tag product-category-icon"></i><span
+                            class="product-category">{{event?.category}}</span>
+                    </div>
+                    <div class="product-list-action">
+                        <span class="product-price" *ngIf="event.free">Free</span>
+                        <span class="product-price" *ngIf="!event.free">PKR {{event?.amount}}</span>
+                        <p-button icon="pi pi-money" label="Bookings" (click)="onBookings(event)"
+                            *ngIf="role=='organizer'"></p-button>
+                        <p-button label="Register" (click)="onBook(event)" *ngIf="role=='viewer'"></p-button>
+                    </div>
+                </div>
+            </div>
+        </ng-template> -->
+        <ng-template let-event pTemplate="gridItem">
+            <div class="p-col-12 p-md-4">
+                <!-- <div class="product-grid-item card" *ngIf="booked">
+                    <div class="product-grid-item-top">
+                        <div>
+                            <i class="pi pi-tag product-category-icon"></i>
+                            <span class="product-category">{{event?.event?.category}}</span>
+                        </div>
+                    </div>
+                    <div class="product-grid-item-content">
+                        <img [src]="'assets/showcase/products/' + event?.event?.eventImage"
+                            [alt]="event?.event?.eventImage" />
+                        <div class="product-name">{{event?.event?.name}}</div>
+                        <div class="product-description">{{event?.event?.description}}</div>
+                    </div>
+                    <div class="product-grid-item-bottom">
+                        <span class="product-price">PKR {{event?.event?.amount}}</span>
+                        <p-button icon="pi pi-money" label="Detail" (click)="onPayment()"></p-button>
+                    </div>
+                </div> -->
+                <div class="product-grid-item card" *ngIf="!booked">
+                    <div class="product-grid-item-top">
+                        <div>
+                            <i class="pi pi-tag product-category-icon"></i>
+                            <span class="product-category">{{event?.category}}</span>
+                            <!-- <i class="pi pi-user product-host-icon"></i>
+                            <span class="product-host">{{event?.hostName}}</span> -->
+                        </div>
+                        <p-button icon="pi pi-pencil" (click)="onEdit(event)"
+                            *ngIf="role=='organizer' && !event?.isStarted"></p-button>
+                        <p-button icon="pi pi-times" (click)="onClose(event)"
+                            *ngIf="role=='organizer' && event?.isStarted"></p-button>
+                        <p-button icon="pi pi-play" (click)="onStart(event)" *ngIf="role=='organizer'"></p-button>
+                        <!-- <i class="pi pi-pencil"></i> -->
+                        <!-- <span icon="pi pi-money">Edit</span> -->
+                    </div>
+                    <div class="product-grid-item-content">
+                        <img [src]="'assets/showcase/products/' + event?.eventImage" [alt]="event?.eventImage" />
+                        <div class="product-name" pTooltip="{{event?.name}}" tooltipPosition="bottom">{{event?.name}}
+                        </div>
+                        <div class="product-description" pTooltip="{{event?.description}}" tooltipPosition="bottom">
+                            {{event?.description}}</div>
+                        <div class="product-description">{{event?.eventDate | date}} - {{event?.eventTime}} -
+                            {{event?.duration}} Minutes</div>
+                        <div class="product-host">Host: {{event?.hostName}} - Seats Left: {{event?.seats}}</div>
+                        <!-- <i class="fas fa-microphone"></i> -->
+                    </div>
+                    <div class="product-grid-item-bottom">
+                        <span class="product-price" *ngIf="event.free">Free</span>
+                        <span class="product-price" *ngIf="!event.free">PKR {{event?.amount}}</span>
+                        <!-- <span class="product-price">PKR {{event?.amount}}</span> -->
+                        <!-- <p-button icon="pi pi-money" label="Bookings" (click)="onBookings(event)"></p-button> -->
+                        <p-button class="eventFooterBtn" label="Bookings" (click)="onBookings(event)"
+                            *ngIf="role=='organizer'"></p-button>
+                        <!-- <p-button class="eventFooterBtn" label="Start" (click)="onStart(event)" *ngIf="role=='organizer'">
+                        </p-button> -->
+                        <p-button class="eventFooterBtn" label="Register" (click)="onBook(event)"
+                            *ngIf="role=='viewer'"></p-button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
+</div>
+
+
+<p-dialog header="Add New Event" [(visible)]="eventDialog" [style]="{width: '1000px'}">
+    <ng-template pTemplate="content">
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-md-6">
+                <label for="name">Event Name</label>
+                <input id="name" [(ngModel)]="event.name" type="text" pInputText required>
+                <small class="p-invalid" *ngIf="submitted && !event.name">Name is required.</small>
+            </div>
+            <div class="p-field p-col-12 p-md-6">
+                <label for="images">Image</label>
+                <input id="images" #imageFile (change)="onChange($event)" type="file" placeholder="" pInputText
+                    accept="image/*">
+                <!-- <p-fileUpload mode="basic" name="eventImage" accept="image/*" maxFileSize="1024000"
+                    (onUpload)="onUpload($event)" chooseLabel="Browse"></p-fileUpload> -->
+                <!-- <p-fileUpload #fubauto mode="basic" name="demo[]" accept="image/*" maxFileSize="1024000"
+                    (onUpload)="onUpload($event)" [auto]="true" chooseLabel="Browse">
+                </p-fileUpload> -->
+                <small class="p-invalid" *ngIf="submitted && !event.images">Image is required.</small>
+            </div>
+            <div class="p-field p-col-12 p-md-12">
+                <label for="description">Description</label>
+                <input id="description" [(ngModel)]="event.description" type="text" pInputText required>
+                <small class="p-invalid" *ngIf="submitted && !event.amount">Description is required.</small>
+            </div>
+            <!-- <div class="p-field p-col-12 p-md-6">
+                <label for="amount">Amount</label>
+                <input id="amount" [(ngModel)]="event.amount" type="number" pInputText required>
+                <small class="p-invalid" *ngIf="submitted && !event.amount">Amount is required.</small>
+            </div> -->
+            <div class="p-field p-col-12 p-md-6">
+                <label for="hostName">Host Name</label>
+                <input id="hostName" [(ngModel)]="event.hostName" type="text" pInputText required>
+                <small class="p-invalid" *ngIf="submitted && !event.hostName"> Host name is required.</small>
+            </div>
+            <div class="p-field p-col-12 p-md-6">
+                <label for="eventDate">Date</label>
+                <input id="eventDate" [(ngModel)]="event.eventDate" type="date" min="2021-05-25" pInputText>
+                <small class="p-invalid" *ngIf="submitted && !event.eventDate">Date is required.</small>
+            </div>
+            <div class="p-field p-col-12 p-md-6">
+                <label for="eventTime">Time</label>
+                <input id="eventTime" [(ngModel)]="event.eventTime" type="time" pInputText>
+                <small class="p-invalid" *ngIf="submitted && !event.eventTime">Time is required.</small>
+            </div>
+            <div class="p-field p-col-6 p-md-3 pt-0">
+                <label for="duration">Duration (Minutes)</label>
+                <p-dropdown appendTo="body" inputId="duration" name="duration" [options]="durations" optionLabel="label"
+                    placeholder="Select Event Duration" [showClear]="true" (onChange)="changeDuration($event)" required
+                    autofocus></p-dropdown>
+                <!-- <input id="duration" [(ngModel)]="event.duration" type="number" min="0" pInputText> -->
+                <small class="p-invalid" *ngIf="submitted && !event.duration">Duration is required.</small>
+            </div>
+            <div class="p-field p-col-6 p-md-3 pt-0">
+                <label for="category">Category</label>
+                <p-dropdown appendTo="body" inputId="category" name="category" [options]="categories"
+                    optionLabel="label" placeholder="Select Category" [showClear]="true"
+                    (onChange)="changeCategory($event)" required autofocus></p-dropdown>
+                <small class="p-invalid" *ngIf="submitted && !event.category">Category is required.</small>
+            </div>
+            <div class="p-field p-col-12 p-md-3">
+                <label for="paidunpaid">Paid/ Unpaid</label>
+                <p-toggleButton id="paidunpaid" [(ngModel)]="checked" onLabel="Paid" offLabel="Un Paid"
+                    [style]="{'width': '10em'}"></p-toggleButton>
+            </div>
+            <div class="p-field p-col-12 p-md-3" *ngIf="!checked">
+                <label for="amount">Amount</label>
+                <input id="amount" [(ngModel)]="event.amount" type="number" min="0" pInputText required>
+                <small class="p-invalid" *ngIf="submitted && !event.amount">Amount is required.</small>
+            </div>
+
+
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="onSubmit()" label="Ok" styleClass="p-button-text" [disabled]="disabled">
+        </p-button>
+    </ng-template>
+</p-dialog>
+
+
+<p-dialog header="Edit Event" [(visible)]="eventEditDialog" [style]="{width: '1000px'}">
+    <ng-template pTemplate="content">
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-md-6">
+                <label for="name">Name</label>
+                <input id="name" [(ngModel)]="selectedEvent.name" type="text" pInputText required>
+                <small class="p-invalid" *ngIf="submitted && !selectedEvent.name">Name is required.</small>
+            </div>
+            <div class="p-field p-col-12 p-md-6">
+                <label for="hostName">Host Name</label>
+                <input id="hostName" [(ngModel)]="selectedEvent.hostName" type="text" pInputText required>
+                <small class="p-invalid" *ngIf="submitted && !selectedEvent.hostName"> Host name is required.</small>
+            </div>
+            <!-- <div class="p-field p-col-12 p-md-6">
+                <label for="images">Image</label>
+                <input id="images" (change)="onChange($event)" type="file" placeholder="" pInputText>
+                <small class="p-invalid" *ngIf="submitted && !selectedEvent.images">Image is required.</small>
+            </div> -->
+            <div class="p-field p-col-12 p-md-12">
+                <label for="description">Description</label>
+                <input id="description" [(ngModel)]="selectedEvent.description" type="text" pInputText required>
+                <small class="p-invalid" *ngIf="submitted && !selectedEvent.amount">Description is required.</small>
+            </div>
+
+            <div class="p-field p-col-12 p-md-6">
+                <label for="eventDate">Date</label>
+                <input id="eventDate" [(ngModel)]="selectedEvent.eventDate" type="date" pInputText>
+                <small class="p-invalid" *ngIf="submitted && !selectedEvent.eventDate">Date is required.</small>
+            </div>
+            <div class="p-field p-col-12 p-md-6">
+                <label for="eventTime">Time</label>
+                <input id="eventTime" [(ngModel)]="selectedEvent.eventTime" type="time" pInputText>
+                <small class="p-invalid" *ngIf="submitted && !selectedEvent.eventTime">Time is required.</small>
+            </div>
+            <!-- <div class="p-field p-col-12 p-md-3">
+                <label for="category">Category</label>
+                <p-dropdown appendTo="body" inputId="category" name="category" [options]="categories"
+                    optionLabel="label" placeholder="Change Category" [showClear]="true"
+                    (onChange)="changeCategory($event)" required autofocus></p-dropdown>
+                <small class="p-invalid" *ngIf="submitted && !selectedEvent.category">Time is required.</small>
+            </div> -->
+            <!-- <div class="p-field p-col-12 p-md-3">
+                <label for="paidunpaid">Paid/ Unpaid</label>
+                <p-toggleButton id="paidunpaid" [(ngModel)]="checked" onLabel="Paid" offLabel="Un Paid"
+                    [style]="{'width': '10em'}"></p-toggleButton>
+            </div> -->
+            <div class="p-field p-col-12 p-md-6">
+                <label for="amount">Amount</label>
+                <input id="amount" [(ngModel)]="selectedEvent.amount" type="number" min="0" pInputText required>
+                <small class="p-invalid" *ngIf="submitted && !selectedEvent.amount">Amount is required.</small>
+            </div>
+            <div class="p-field p-col-12 p-md-6">
+                <label for="duration">Duration (Minutes)</label>
+                <select name="duration" id="duration" [(ngModel)]="selectedEvent.duration"
+                    class="form-control input-underline input-lg">
+                    <option [value]="duration.label" *ngFor="let duration of durations"> {{duration.label}}</option>
+                </select>
+                <!-- <input id="duration" [(ngModel)]="selectedEvent.duration" type="number" min="0" pInputText> -->
+                <small class="p-invalid" *ngIf="submitted && !selectedEvent.duration">Duration is required.</small>
+            </div>
+
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="updateEvent()" label="Update" styleClass="p-button-text"
+            [disabled]="disabled">
+        </p-button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog #cd [style]="{width: '50vw'}">
+    <p-footer *ngIf="selectedEvent?.amount !=0 && role=='viewer'">
+        <div class="text-left">Please transfer amount Rs.{{selectedEvent?.amount}} to Event Organizer's account.</div>
+        <div class="text-left p-text-bold">{{account?.bname}}-{{account?.accounttitle}}-{{account?.accountno}}</div>
+    </p-footer>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+        <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+    </p-footer>
+</p-confirmDialog>
+
+<!-- <p-confirmDialog [style]="{width: '450px'}"  header="inConfirmation" #cd>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog> -->

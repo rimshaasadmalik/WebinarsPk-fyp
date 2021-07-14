@@ -1,0 +1,70 @@
+<div class="card p-shadow-12">
+    <p-table #dt [value]="receivables" [rows]="10" [paginator]="true" dataKey="_id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['vendor.name', '_id', 'credit', 'debit', 'net']" [rowHover]="true"
+        [showCurrentPageReport]="true">
+
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Receivables Listing</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="vendor.name">Customer</th>
+                <th pSortableColumn="invoiceNo">Invoice No</th>
+                <th pSortableColumn="credit" class="text-right">Credit</th>
+                <th pSortableColumn="debit" class="text-right">Debit</th>
+                <th pSortableColumn="net" class="text-right">Net</th>
+                <th class="p-text-center">Action </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-receivable>
+            <tr>
+                <td class="p-py-1">{{receivable?.customer?.name}}</td>
+                <td class="p-py-1">{{receivable?._id}}</td>
+                <td class="p-py-1 text-right">{{receivable?.credit | number:'1.2-3'}}</td>
+                <td class="p-py-1 text-right">{{receivable?.debit | number:'1.2-3'}}</td>
+                <td class="p-py-1 text-right">{{receivable?.net | number:'1.2-3'}}</td>
+                <td class="p-py-1 p-text-center">
+                    <button pButton pRipple icon="pi pi-plus" tooltipPosition="bottom"
+                        class="p-button-rounded p-button-success p-mr-2" (click)="onSettle(receivable)"
+                        [disabled]="receivable?.settled"></button>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{receivables ? receivables.length : 0 }} Receivables.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+<!--  Edit Receivable Dialog  -->
+<p-dialog [(visible)]="receivableEditDialog" [style]="{width: '1000px'}" header="Settle Sale Invoice" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-md-12">
+                <label for="debit">Debit Amount</label>
+                <input id="debit" [(ngModel)]="debitAmount" type="number" [max]="receivable.credit" pInputText required>
+            </div>
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="onSettleSave()"></button>
+    </ng-template>
+</p-dialog>
+
+<!-- Confirmation Dialog Box -->
+<p-confirmDialog></p-confirmDialog>

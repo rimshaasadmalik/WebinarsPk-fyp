@@ -1,0 +1,93 @@
+<div class="card">
+    <p-dataView #dv [value]="events" [paginator]="true" [rows]="9" filterBy="name" [sortField]="sortField"
+        [sortOrder]="sortOrder" layout="grid">
+        <ng-template pTemplate="header">
+            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+                <!-- <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By Price"
+                    (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown>
+                <button type="button" class="ml-1" icon="pi pi-plus" pButton pRipple (click)="onAdd()"
+                    label="Add"></button> -->
+                <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+                    <i class="pi pi-search"></i>
+                    <input type="search" pInputText placeholder="Search by Name"
+                        (input)="dv.filter($event.target.value)">
+                </span>
+                <!-- <p-dataViewLayoutOptions></p-dataViewLayoutOptions> -->
+            </div>
+        </ng-template>
+        <!-- <ng-template let-event pTemplate="listItem">
+            <div class="p-col-12">
+                <div class="product-list-item">
+                    <img [src]="'assets/showcase/products/' + event?.event?.eventImage"
+                        [alt]="event?.event?.eventImage" />
+                    <div class="product-list-detail">
+                        <div class="product-name"  pTooltip="{{event?.event?.name}}" tooltipPosition="bottom">{{event?.event?.name}}</div>
+                        <div class="product-description" pTooltip="{{event?.event?.description}}" tooltipPosition="bottom">{{event?.event?.description}}</div>
+                        <i class="pi pi-tag product-category-icon"></i><span
+                            class="product-category">{{event?.event?.category}}</span>
+                    </div>
+                    <div class="product-list-action">
+                        <span class="product-price">PKR {{event?.event?.amount}}</span>
+                        <p-button label="Join" (click)="onJoin(event?.event)"></p-button>
+                    </div>
+                </div>
+            </div>
+        </ng-template> -->
+        <ng-template let-event pTemplate="gridItem">
+            <div class="p-col-12 p-md-4">
+                <div class="product-grid-item card">
+                    <div class="product-grid-item-top">
+                        <div>
+                            <i class="pi pi-tag product-category-icon"></i>
+                            <span class="product-category">{{event?.event?.category}}</span>
+                        </div>
+                        <!-- <span
+                            [class]="'product-badge status-' + product.amount)">{{product?.amount}}</span> -->
+                    </div>
+                    <div class="product-grid-item-content">
+                        <img [src]="'assets/showcase/products/' + event?.event?.eventImage"
+                            [alt]="event?.event?.eventImage" />
+                        <div class="product-name" pTooltip="{{event?.event?.name}}" tooltipPosition="bottom">{{event?.event?.name}}</div>
+                        <div class="product-description" pTooltip="{{event?.event?.description}}" tooltipPosition="bottom">{{event?.event?.description}}</div>
+                        <div class="product-description">{{event?.event?.eventDate | date}} -
+                            {{event?.event?.eventTime}} - {{event?.event?.duration}} Minutes</div>
+                        <div class="product-host">Host: {{event?.event?.hostName}}</div>
+                        <!-- <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating> -->
+                    </div>
+                    <div class="product-grid-item-bottom">
+                        <span class="product-price" *ngIf="event?.event?.amount == 0">Free</span>
+                        <span class="product-price" *ngIf="event?.event?.amount !=0">PKR {{event?.event?.amount}}</span>
+                        <!-- <span class="product-price">PKR {{event?.event?.amount}}</span> -->
+                        <p-button label="Receipt" (click)="onReceipt(event)" *ngIf="event?.event?.amount !=0 && event?.payment?.receipt==null">
+                        </p-button> <!-- [disabled]="event?.payment?.receipt" -->
+                        <p-button label="Join" *ngIf="event?.payment?.status === 'Approved' && event?.event?.isStarted"
+                            (click)="onJoin(event?.event)"></p-button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
+</div>
+
+
+<p-dialog header="Upload Payment Receipt" [(visible)]="receiptDialog" [style]="{width: '500px'}">
+    <ng-template pTemplate="content">
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-md-12">
+                <label for="images">Image</label>
+                <input id="images" #imageFile (change)="onChange($event)" type="file" placeholder="" pInputText
+                    accept="image/*">
+                <!-- <small class="p-invalid" *ngIf="submitted && !event.images">Image is required.</small> -->
+            </div>
+            <div class="p-field p-col-12 p-md-12 caution">
+                <label for="caution" class="cautionLabel">Caution</label>
+                <p id="caution" class="cautionP">You can not cancel the event after the payment. You want to proceed now?</p>
+            </div>
+
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="onSubmit()" label="Ok" styleClass="p-button-text" [disabled]="disabled">
+        </p-button>
+    </ng-template>
+</p-dialog>

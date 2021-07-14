@@ -1,0 +1,30 @@
+// :host ::ng-deep {
+//     .p-button {
+//         color: white;
+//         background: rgb(190, 153, 49);
+//         background-color: rgb(190, 153, 49);
+//     }
+
+//     .p-button:enabled:hover {
+//         background: rgb(190, 153, 49);
+//         color: #ffffff;
+//         border-color: rgb(190, 153, 49);
+//     }
+// }
+
+
+:host ::ng-deep {
+
+    // .btnColor {
+    //     background-color: rgb(190, 153, 49);
+    // }
+    .p-dialog .p-dialog-footer button {
+        background-color: rgb(190, 153, 49);
+        color: white;
+    }
+
+    .p-dialog .p-dialog-footer button:enabled:hover {
+        background-color: rgb(190, 153, 49);
+        color: white;
+    }
+}
